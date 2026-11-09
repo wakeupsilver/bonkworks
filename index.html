@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bonkworks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header id="bar">
+    <div class="brand"><button id="home" class="logo" title="Back to the start screen">Bonkworks</button><span class="tag">chain reaction workshop</span></div>
+    <div class="controls">
+      <button id="go" class="btn go" title="Run the machine (Space)">▶ GO!</button>
+      <button id="slow" class="btn tog" aria-pressed="false" title="Slow motion">🐢<span class="l"> Slow-mo</span></button>
+      <button id="follow" class="btn tog" aria-pressed="true" title="Camera follows the action">🎥<span class="l"> Follow</span></button>
+      <button id="assist" class="btn tog" aria-pressed="true" title="Assist: gently steers objects toward their target and nudges stuck chains. Turn off for pure physics.">🪄<span class="l"> Assist</span></button>
+      <span class="sep"></span>
+      <label class="gen"><span>Parts</span><input id="genN" type="number" min="3" max="40" value="14"></label>
+      <button id="gen" class="btn" title="Generate a random machine">🎲<span class="l"> Generate</span></button>
+      <button id="clear" class="btn" title="Clear the board">🧹<span class="l"> Clear</span></button>
+      <button id="mute" class="btn tog" aria-pressed="false" title="Sound">🔊</button>
+      <button id="help" class="btn" title="How to play">?</button>
+    </div>
+  </header>
+  <main id="main">
+    <aside id="panel">
+      <div class="panel-head">
+        <div id="nextHead"></div>
+        <input id="search" type="search" placeholder="Search 70+ parts…" autocomplete="off">
+        <div id="sigFilter" class="chips"></div>
+      </div>
+      <div id="inv"></div>
+    </aside>
+    <section id="stage">
+      <canvas id="cv"></canvas>
+      <div id="toolbar" hidden>
+        <span id="tbName"></span>
+        <button data-act="next" class="tb-hi" title="Pick what this part sets off next">➕ Next</button>
+        <button data-act="flip" title="Flip (F)">↔</button>
+        <button data-act="rotl" title="Rotate (Q)">⟲</button>
+        <button data-act="rotr" title="Rotate (E)">⟳</button>
+        <button data-act="link" title="Link to another part (L)">🔗</button>
+        <button data-act="del" title="Delete (Del)">🗑</button>
+      </div>
+      <div id="status"></div>
+      <div id="zoom"><button data-z="1.2">＋</button><button data-z="0.83">－</button><button data-z="fit" title="Fit machine">⤢</button></div>
+      <button id="panelToggle" class="btn">🧰 Parts</button>
+      <div id="toast" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+  <footer id="chain"></footer>
+  <div id="welcome" hidden>
+    <div class="welcome-card">
+      <p class="w-eyebrow">Chain reaction workshop</p>
+      <h1>Bonkworks</h1>
+      <p class="w-lede">Pin gadgets to the wall, link each one to the next, and press GO. A marble trips a mousetrap, which yanks a string, which pops a balloon…</p>
+      <div class="w-choices">
+        <button id="wExample" class="w-choice primary"><span class="w-ic">▶</span><span><b>Watch an example</b><small>See a 12-part machine run, then take it apart</small></span></button>
+        <button id="wBuild" class="w-choice"><span class="w-ic">🛠</span><span><b>Build my own</b><small>Start from an empty wall</small></span></button>
+        <button id="wSurprise" class="w-choice"><span class="w-ic">🎲</span><span><b>Surprise me</b><small>A random machine every time</small></span></button>
+        <button id="wContinue" class="w-choice" hidden><span class="w-ic">↩</span><span><b>Continue my machine</b><small>Pick up where you left off</small></span></button>
+      </div>
+      <button id="wHelp" class="w-link">How does it work?</button>
+    </div>
+  </div>
+  <div id="helpBox" hidden>
+    <div class="sheet">
+      <h2>How to build a contraption</h2>
+      <ol>
+        <li><b>Start with a starter.</b> Anything with ▶ (a marble hopper, an alarm clock, a big red button) goes off when you press <b>GO!</b></li>
+        <li><b>Click a part on the board</b>, then pick the next one from the list. Parts that react to what this one does float to the top. Parts that won't react are greyed out, with the reason.</li>
+        <li>Picked parts land where they should be hit and get linked automatically. Drag them around to fine-tune. Ropes 🪢 and wires ⚡ can reach far; balls and dominoes need to actually hit.</li>
+        <li>Press <b>GO!</b> Watch the chain. If it stalls, nudge parts and try again, or leave 🪄 Assist on for a helping hand.</li>
+        <li>Short on ideas? <b>🎲 Generate</b> builds a random machine for you.</li>
+      </ol>
+      <p class="sigs" id="sigLegend"></p>
+      <p class="keys">Keys: Space = GO / reset · Del = delete · F = flip · Q/E = rotate · L = link · Esc = deselect · drag empty space to pan, scroll to zoom</p>
+      <button id="helpClose" class="btn go">Let's build!</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<script src="audio.js"></script>
+<script src="engine.js"></script>
+<script src="render.js"></script>
+<script src="parts.js"></script>
+<script src="verified.js"></script>
+<script src="ui.js"></script>
+</body>
+</html>
